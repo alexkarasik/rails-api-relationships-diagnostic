@@ -5,7 +5,7 @@ Place your responses inside the fenced code-blocks where indivated by comments.
 1.  Describe a reason why a join tables may be valuable.
 
   ```md
-    # < Your Response Here >
+  Join tables link the relationships between different tables together.
   ```
 
 1.  Provide a database table structure and explain the Entity Relationship that
@@ -15,23 +15,30 @@ Place your responses inside the fenced code-blocks where indivated by comments.
   join table with references to `Movies` and `Profiles`.
 
   ```md
-    # < Your Response Here >
+  I am a bit off with my synax and know I am missing a few things.
+  Profiles and Movies are two seperate tables that are connected by the Favorites join table.
   ```
 
 1.  For the above example, what needs to be added to the Model files?
 
   ```rb
   class Profile < ActiveRecord::Base
+    has_many: given_name, surname, email through: :favorites
+    has_many :favorites
   end
   ```
 
   ```rb
   class Movie < ActiveRecord::Base
+    had_many: release_date, length through: :favorites
+    has_many: favorites
   end
   ```
 
   ```rb
   class Favorite < ActiveRecord::Base
+    belongs_to :movie
+    belongs_to :profile
   end
   ```
 
@@ -40,11 +47,13 @@ like to show all movies favorited by a profile on
 `http://localhost:3000/profiles/1`
 
   ```md
-    # < Your Response Here >
+A serializer gives us custom JSON by giving us each resource as a class that inherits from the serializer.
+https://www.sitepoint.com/active-model-serializers-rails-and-json-oh-my/
   ```
 
   ```rb
   class ProfileSerializer < ActiveModel::Serializer
+  No time
   end
   ```
 
@@ -52,13 +61,15 @@ like to show all movies favorited by a profile on
 the above `Movies` and `Profiles`.
 
   ```sh
-    # < Your Response Here >
+  rails generate scaffold Favorites movies:string profiles:string
   ```
 
 1.  What is `Dependent: Destroy` and where/why would we use it?
 
   ```md
-    # < Your Response Here >
+  Dependent is concerned with associated objects when their owner is destroyed. Destroy is when the associated objects are themselves destroyed. If we had seperate tables of parent and child elements, it saves time and secures that there are no mistakes when we want both the parents and the children destroyed.
+
+  http://stackoverflow.com/questions/20915443/dependent-destroy-how-does-this-work
   ```
 
 1.  Think of **ANY** example where you would have a one-to-many relationship as well
@@ -66,5 +77,8 @@ as a many-to-many relationship in an application. You only need to list the
 description about the resources and how they relate to one another.
 
   ```md
-    # < Your Response Here >
+  One to many is when a parent record in one table can reference several child records. The child record can not have more than one parent record, but the parent record can have multiple or even no child records.
+  A mother can have many children, but those children only have one mother.
+  For a many-to-many relationship, a child record can link to several parents records
+  An author can write several books and a book can have several authors.
   ```
